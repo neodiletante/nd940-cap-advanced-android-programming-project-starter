@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="election"
+            type="com.example.android.politicalpreparedness.network.models.Election" />
+
+        <variable
+            name="clickListener"
+            type="com.example.android.politicalpreparedness.election.adapter.ElectionListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:onClick="@{() -> clickListener.onClick(election)}">
+
+        <TextView
+            android:id="@+id/election_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/item_font_size"
+            android:textStyle="bold"
+            tools:text="VIP Test Election"
+            android:text="@{election.name}"
+            />
+
+        <TextView
+            android:id="@+id/election_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:textSize="@dimen/item_font_size"
+            tools:text="Sun Jun 06 00:00:00 EDT 2021"
+            app:layout_constraintTop_toBottomOf="@+id/election_name"
+            android:text="@{election.electionDay.toString()}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,21 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add data binding node for Voter Info ViewModel -->
+    <data>
+        <variable
+            name="voterInfo"
+            type="com.example.android.politicalpreparedness.network.models.VoterInfoResponse" />
+
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add title to toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/election_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
             android:singleLine="true"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{voterInfo.election.name}"
+            tools:title="Title"
+            />
 
         <!-- TODO: Add visual styling -->
         <TextView
@@ -26,7 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
             app:layout_constraintTop_toBottomOf="@id/election_name"
-            tools:text="12 November 2055" />
+            tools:text="12 November 2055"
+            android:textSize="@dimen/item_font_size"
+            android:text="@{voterInfo.election.electionDay.toString()}"
+            />
 
         <!-- TODO: Add visual styling and content -->
         <TextView
@@ -34,16 +47,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/election_date"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            android:text="@string/election_information"
+            android:textSize="@dimen/item_font_size"
+            android:textStyle="bold"
+            />
 
-        <!-- TODO: Add click binding to open web URL -->
         <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/state_locations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/state_header"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            android:text="@string/voting_locations"
+            android:onClick="@{() -> viewModel.goToVotingLocations()}"
+            android:textSize="@dimen/item_font_size"
+            />
 
         <!-- TODO: Add click binding to open web URL -->
         <!-- TODO: Add visual styling and content -->
@@ -52,7 +72,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/state_locations"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
+            android:text="@string/ballot_information"
+            android:onClick="@{() -> viewModel.goToBallotInformation()}"
+            android:textSize="@dimen/item_font_size"
+            />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/address_group"
@@ -74,9 +98,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
-            app:layout_constraintStart_toStartOf="@id/election_date" />
+            app:layout_constraintStart_toStartOf="@id/election_date"
 
-        <!-- TODO: Add button to save election to Room -->
+            />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:infoBtnText="@{viewModel._isElectionSaved}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{ () -> viewModel.saveRemoveElection()}"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
